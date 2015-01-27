@@ -73,7 +73,7 @@ Create a file called ``payment.php`` that will generate a payment URL and direct
    header("Location: $paymentUrl");
    exit();
 
-The fields ``amount``, ``merchant_id`` and ``john.doe@example.fr`` are required. 
+The fields ``merchant_id`` and ``email`` are required. 
 
 The complete list of accepted fields is available in the reference_ section.
 
@@ -88,7 +88,7 @@ Fields marked with an * are required.
 ============== ======= =
 Name           Type    Description
 ============== ======= =
-amount *       Integer Transaction amount, in cents (such as ``4207`` for 42,07€). We advise you to verify that the amount is between the minimum and maximum amounts allowed for your account.
+amount         Integer Transaction amount, in cents (such as ``4207`` for 42,07€). We advise you to verify that the amount is between the minimum and maximum amounts allowed for your account.
 -------------- ------- -
 merchant_id *  String  The personnal id that was given by Mandapay at the subscription step.
 -------------- ------- -

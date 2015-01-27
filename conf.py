@@ -45,7 +45,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'mandapay-php-lib'
-copyright = '2015, Benoît Liénart'
+copyright = '2015, Benoit Lienart'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

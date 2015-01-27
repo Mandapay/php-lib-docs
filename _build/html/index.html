@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mandapay PHP library documentation &mdash; mandapay-php-lib 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="mandapay-php-lib 0.1 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">mandapay-php-lib 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mandapay-php-library-documentation">
+<h1><a class="toc-backref" href="#id1">Mandapay PHP library documentation</a><a class="headerlink" href="#mandapay-php-library-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#mandapay-php-library-documentation" id="id1">Mandapay PHP library documentation</a><ul>
+<li><a class="reference internal" href="#overview" id="id2">Overview</a></li>
+<li><a class="reference internal" href="#installation" id="id3">Installation</a></li>
+<li><a class="reference internal" href="#test-sandbox-mode" id="id4">TEST (Sandbox) Mode</a></li>
+<li><a class="reference internal" href="#creating-a-payment" id="id5">Creating a payment</a></li>
+<li><a class="reference internal" href="#reference" id="id6">Reference</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id2">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Mandapay PHP library enables developers to install the Mandapay online payment system to any website or e-commerce store, or to build a payment plugin for an existing CMS (Magento, Wordpress, WooCommerce, Prestashop, etc.).</p>
+<p><strong>Payment process</strong></p>
+<ol class="arabic simple">
+<li>Your website generates a dynamic payment URL by passing the payment parameters (e.g., amount, customer ID, return URL) into the PHP library</li>
+<li>Redirect your customer to that URL, which points to a secure online payment page</li>
+<li>Once the payment goes through, Mandapay redirects your customer towards the return URL you specified</li>
+</ol>
+</div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id3">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p><strong>Download the library:</strong></p>
+<p>Download <cite>mandapay_php</cite> and copy the folder in your environment.</p>
+<p><strong>Configuration</strong></p>
+<p>Mandapay generates a set of unique parameters and keys for each user account, which needs to be saved on your server by following these configuration instructions.</p>
+<p>Create a file called <tt class="docutils literal"><span class="pre">setup.php</span></tt> and insert the following lines to set-up the Mandapay library. Replace <tt class="docutils literal"><span class="pre">PATH_TO_MANDAPAY</span></tt> with the correct path for your environment.</p>
+<div class="highlight-php"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">require_once</span><span class="p">(</span><span class="s2">&quot;PATH_TO_MANDAPAY/mandapay_php/lib/Mandapay.php&quot;</span><span class="p">);</span>
+<span class="nv">$isTest</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="nv">$parameters</span> <span class="o">=</span> <span class="nx">Mandapay</span><span class="o">::</span><span class="na">loadParameters</span><span class="p">();</span>
+<span class="nv">$parameters</span><span class="o">-&gt;</span><span class="na">saveInFile</span><span class="p">(</span><span class="s2">&quot;PATH_TO_MANDAPAY/parameters.json&quot;</span><span class="p">);</span>
+</pre></div>
+</td></tr></table></div>
+<p>You need to execute this code once, for example by opening your web browser and accessing <tt class="docutils literal"><span class="pre">http://yoursite.com/setup.php</span></tt> (the URL where you saved the above code). Verify that everythings went well by looking at the file <tt class="docutils literal"><span class="pre">parameters.json</span></tt> and identifying the parameter <tt class="docutils literal"><span class="pre">paymentBaseUrl</span></tt>.</p>
+<p>If you encounter the error <tt class="docutils literal"><span class="pre">Warning:</span> <span class="pre">file_put_contents(./parameters.json):</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">open</span> <span class="pre">stream:</span> <span class="pre">Permission</span> <span class="pre">denied</span> <span class="pre">in</span> <span class="pre">PATH_TO_MANDAPAY/lib/mandapay/Parameters.php</span> <span class="pre">on</span> <span class="pre">line</span> <span class="pre">53</span></tt>, it is likely that you have a permission issue. Open a terminal and try <tt class="docutils literal"><span class="pre">chmod</span> <span class="pre">+777</span> <span class="pre">.</span></tt> (note the trailing dot, it is important).</p>
+</div>
+<div class="section" id="test-sandbox-mode">
+<h2><a class="toc-backref" href="#id4">TEST (Sandbox) Mode</a><a class="headerlink" href="#test-sandbox-mode" title="Permalink to this headline">¶</a></h2>
+<p>Mandapay has created a sandbox environment for testing transactions without making real payments.</p>
+<p>When you sign up to Mandapay, you can only use the TEST mode. Once your account is verified, you will be able to configure your site with the LIVE mode to make real transactions.</p>
+</div>
+<div class="section" id="creating-a-payment">
+<span id="create-a-payment"></span><h2><a class="toc-backref" href="#id5">Creating a payment</a><a class="headerlink" href="#creating-a-payment" title="Permalink to this headline">¶</a></h2>
+<p>Create a file called <tt class="docutils literal"><span class="pre">payment.php</span></tt> that will generate a payment URL and direct the customer to the online payment page.</p>
+<div class="highlight-php"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">require_once</span><span class="p">(</span><span class="s2">&quot;PATH_TO_MANDAPAY/mandapay_php/lib/Mandapay.php&quot;</span><span class="p">);</span>
+<span class="nx">Mandapay</span><span class="o">::</span><span class="na">setConfigFromFile</span><span class="p">(</span><span class="s2">&quot;PATH_TO_MANDAPAY/parameters.json&quot;</span><span class="p">);</span>
+
+<span class="nv">$paymentUrl</span> <span class="o">=</span> <span class="nx">PaymentUrl</span><span class="o">::</span><span class="na">generateUrl</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+                                      <span class="s1">&#39;amount&#39;</span> <span class="o">=&gt;</span> <span class="mi">999</span><span class="p">,</span>
+                                                                              <span class="s1">&#39;merchant_id&#39;</span> <span class="o">=&gt;</span> <span class="mi">999</span><span class="p">,</span>
+                                      <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john.doe@example.fr&#39;</span><span class="p">,</span> <span class="cm">/* Your customer mail address */</span>
+                                      <span class="s1">&#39;firstName&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+                                      <span class="s1">&#39;lastName&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span>
+                                      <span class="p">));</span>
+<span class="nb">header</span><span class="p">(</span><span class="s2">&quot;Location: </span><span class="si">$paymentUrl</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="k">exit</span><span class="p">();</span>
+</pre></div>
+</td></tr></table></div>
+<p>The fields <tt class="docutils literal"><span class="pre">amount</span></tt>, <tt class="docutils literal"><span class="pre">merchant_id</span></tt> and <tt class="docutils literal"><span class="pre">john.doe&#64;example.fr</span></tt> are required.</p>
+<p>The complete list of accepted fields is available in the <a class="reference internal" href="#reference">reference</a> section.</p>
+</div>
+<div class="section" id="reference">
+<h2><a class="toc-backref" href="#id6">Reference</a><a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<p><strong>Payment fields</strong></p>
+<p>Fields marked with an * are required.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="3%" />
+<col width="91%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>amount *</td>
+<td>Integer</td>
+<td>Transaction amount, in cents (such as <tt class="docutils literal"><span class="pre">4207</span></tt> for 42,07€). We advise you to verify that the amount is between the minimum and maximum amounts allowed for your account.</td>
+</tr>
+<tr class="row-odd"><td>merchant_id</td>
+<td>String</td>
+<td>The personnal id that was given by Mandapay at the subscription step.</td>
+</tr>
+<tr class="row-even"><td>ipnUrl</td>
+<td>String</td>
+<td>URL pointing to the <tt class="docutils literal"><span class="pre">ipn.php</span></tt> page, to which Mandapay will send payment and refund notifications. This URL must be accessible from anywhere on the Internet (usually not the case in <tt class="docutils literal"><span class="pre">localhost</span></tt> environments).</td>
+</tr>
+<tr class="row-odd"><td>cancelUrl</td>
+<td>String</td>
+<td>URL pointing to your payment cancelation page, to which Mandapay will redirect your customer if he cancels the payment.</td>
+</tr>
+<tr class="row-even"><td>returnUrl</td>
+<td>String</td>
+<td>URL pointing to your payment confirmation page, to which Mandapay will redirect your customer after the payment.</td>
+</tr>
+<tr class="row-odd"><td>email *</td>
+<td>String</td>
+<td>The customer&#8217;s email address.</td>
+</tr>
+<tr class="row-even"><td>firstName</td>
+<td>String</td>
+<td>The customer&#8217;s first name.</td>
+</tr>
+<tr class="row-odd"><td>lastName</td>
+<td>String</td>
+<td>The customer&#8217;s last name.</td>
+</tr>
+<tr class="row-even"><td>customer</td>
+<td>String</td>
+<td>The customer ID in your database.</td>
+</tr>
+<tr class="row-odd"><td>order</td>
+<td>String</td>
+<td>The order ID in your database.</td>
+</tr>
+<tr class="row-even"><td>customData</td>
+<td>String</td>
+<td>Additional data that you want to receive in the IPN.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IPN fields (future use)</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="4%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>state</td>
+<td>String</td>
+<td>The new state of the transaction: <tt class="docutils literal"><span class="pre">paid</span></tt> or <tt class="docutils literal"><span class="pre">refunded</span></tt>.</td>
+</tr>
+<tr class="row-odd"><td>idTransaction</td>
+<td>Integer</td>
+<td>The Mandapay transaction ID. We recommend you save it and associate it with this order in your database.</td>
+</tr>
+<tr class="row-even"><td>amount</td>
+<td>Integer</td>
+<td>Transaction amount, in cents (such as <tt class="docutils literal"><span class="pre">4207</span></tt> for 42,07€).</td>
+</tr>
+<tr class="row-odd"><td>email</td>
+<td>String</td>
+<td>The customer&#8217;s email address, either provided when creating the payment URL or entered manually on the payment page by the customer.</td>
+</tr>
+<tr class="row-even"><td>firstName</td>
+<td>String</td>
+<td>The customer&#8217;s first name, either provided when creating the payment URL or entered manually on the payment page by the customer.</td>
+</tr>
+<tr class="row-odd"><td>lastName</td>
+<td>String</td>
+<td>The customer&#8217;s last name, either provided when creating the payment URL or entered manually on the payment page by the customer.</td>
+</tr>
+<tr class="row-even"><td>customer</td>
+<td>String</td>
+<td>Customer ID provided when creating the payment URL.</td>
+</tr>
+<tr class="row-odd"><td>order</td>
+<td>String</td>
+<td>Order ID provided when creating the payment URL.</td>
+</tr>
+<tr class="row-even"><td>customData</td>
+<td>String</td>
+<td>Custom data provided when creating the payment URL.</td>
+</tr>
+<tr class="row-odd"><td>origin</td>
+<td>String</td>
+<td>Information about your website version (e.g., &#8216;My Website 1.2 mandapay_php0.9 PHP 5.3&#8217;), provided when creating the payment URL, with additional data sent by the library itself.</td>
+</tr>
+<tr class="row-even"><td>isTest</td>
+<td>Boolean</td>
+<td>If value is <tt class="docutils literal"><span class="pre">true</span></tt>, the payment was done in Sandbox (TEST) mode.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mandapay PHP library documentation</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#test-sandbox-mode">TEST (Sandbox) Mode</a></li>
+<li><a class="reference internal" href="#creating-a-payment">Creating a payment</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">mandapay-php-lib 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Benoît Liénart.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

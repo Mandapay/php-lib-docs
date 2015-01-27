@@ -12,7 +12,7 @@ The Mandapay PHP library enables developers to install the Mandapay online payme
 
 1. Your website generates a dynamic payment URL by passing the payment parameters (e.g., amount, customer ID, return URL) into the PHP library
 2. Redirect your customer to that URL, which points to a secure online payment page 
-3. Once the payment goes through, Mandapay redirects your customer towards the return URL you specified
+3. Once the payment goes through, Mandapay redirects your customer towards the return URL you specify (in a future version)
 
 Installation
 ------------
@@ -65,7 +65,7 @@ Create a file called ``payment.php`` that will generate a payment URL and direct
 
    $paymentUrl = PaymentUrl::generateUrl(array(
                                          'amount' => 999,
-										 'merchant_id' => 999,
+					 'merchant_id' => 999,
                                          'email' => 'john.doe@example.fr', /* Your customer mail address */
                                          'firstName' => 'John',
                                          'lastName' => 'Doe'
@@ -90,7 +90,7 @@ Name           Type    Description
 ============== ======= =
 amount *       Integer Transaction amount, in cents (such as ``4207`` for 42,07€). We advise you to verify that the amount is between the minimum and maximum amounts allowed for your account.
 -------------- ------- -
-merchant_id    String  The personnal id that was given by Mandapay at the subscription step.
+merchant_id *  String  The personnal id that was given by Mandapay at the subscription step.
 -------------- ------- -
 ipnUrl         String  URL pointing to the ``ipn.php`` page, to which Mandapay will send payment and refund notifications. This URL must be accessible from anywhere on the Internet (usually not the case in ``localhost`` environments).
 -------------- ------- -
@@ -108,7 +108,7 @@ customer       String  The customer ID in your database.
 -------------- ------- -
 order          String  The order ID in your database.
 -------------- ------- -
-customData     String  Additional data that you want to receive in the IPN.
+customData     String  Additional data that you want to specify (e.g. the order description).
 ============== ======= =
 
 

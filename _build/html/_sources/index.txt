@@ -66,7 +66,7 @@ Create a file called ``payment.php`` that will generate a payment URL and direct
    $paymentUrl = PaymentUrl::generateUrl(array(
                                          'amount' => 999,
 					 'merchant_id' => 999,
-                                         'ipnUrl' => 'ipnUrl' => 'http://www.example.org/ipn.php',
+                                         'ipnUrl' => 'http://www.example.org/ipn.php',
 					 'email' => 'john.doe@example.fr', /* Your customer mail address */
                                          'firstName' => 'John',
                                          'lastName' => 'Doe'

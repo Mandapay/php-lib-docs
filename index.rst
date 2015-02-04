@@ -66,14 +66,15 @@ Create a file called ``payment.php`` that will generate a payment URL and direct
    $paymentUrl = PaymentUrl::generateUrl(array(
                                          'amount' => 999,
 					 'merchant_id' => 999,
-                                         'email' => 'john.doe@example.fr', /* Your customer mail address */
+                                         'ipnUrl' => 'ipnUrl' => 'http://www.example.org/ipn.php',
+					 'email' => 'john.doe@example.fr', /* Your customer mail address */
                                          'firstName' => 'John',
                                          'lastName' => 'Doe'
                                          ));
    header("Location: $paymentUrl");
    exit();
 
-The fields ``merchant_id`` and ``email`` are required. 
+The fields ``merchant_id``, ``email``, and ``ipnUrl`` are required. 
 
 The complete list of accepted fields is available in the reference_ section.
 

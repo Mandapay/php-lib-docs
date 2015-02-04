@@ -107,13 +107,15 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="k">require_once</span><span class="p">(</span><span class="s2">&quot;PATH_TO_MANDAPAY/mandapay_php/lib/Mandapay.php&quot;</span><span class="p">);</span>
 <span class="nx">Mandapay</span><span class="o">::</span><span class="na">setConfigFromFile</span><span class="p">(</span><span class="s2">&quot;PATH_TO_MANDAPAY/parameters.json&quot;</span><span class="p">);</span>
 
 <span class="nv">$paymentUrl</span> <span class="o">=</span> <span class="nx">PaymentUrl</span><span class="o">::</span><span class="na">generateUrl</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
                                       <span class="s1">&#39;amount&#39;</span> <span class="o">=&gt;</span> <span class="mi">999</span><span class="p">,</span>
                                       <span class="s1">&#39;merchant_id&#39;</span> <span class="o">=&gt;</span> <span class="mi">999</span><span class="p">,</span>
+                                      <span class="s1">&#39;ipnUrl&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;ipnUrl&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://www.example.org/ipn.php&#39;</span><span class="p">,</span>
                                       <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john.doe@example.fr&#39;</span><span class="p">,</span> <span class="cm">/* Your customer mail address */</span>
                                       <span class="s1">&#39;firstName&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
                                       <span class="s1">&#39;lastName&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span>
@@ -122,7 +124,7 @@
 <span class="k">exit</span><span class="p">();</span>
 </pre></div>
 </td></tr></table></div>
-<p>The fields <tt class="docutils literal"><span class="pre">amount</span></tt>, <tt class="docutils literal"><span class="pre">merchant_id</span></tt> and <tt class="docutils literal"><span class="pre">john.doe&#64;example.fr</span></tt> are required.</p>
+<p>The fields <tt class="docutils literal"><span class="pre">merchant_id</span></tt>, <tt class="docutils literal"><span class="pre">email</span></tt>, and <tt class="docutils literal"><span class="pre">ipnUrl</span></tt> are required.</p>
 <p>The complete list of accepted fields is available in the <a class="reference internal" href="#reference">reference</a> section.</p>
 </div>
 <div class="section" id="reference">
@@ -142,7 +144,7 @@
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>amount *</td>
+<tr class="row-even"><td>amount</td>
 <td>Integer</td>
 <td>Transaction amount, in cents (such as <tt class="docutils literal"><span class="pre">4207</span></tt> for 42,07€). We advise you to verify that the amount is between the minimum and maximum amounts allowed for your account.</td>
 </tr>
@@ -301,7 +303,7 @@
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2015, Benoît Liénart.
+        &copy; Copyright 2015, Benoit Lienart.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>

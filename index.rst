@@ -93,7 +93,7 @@ amount         Integer Transaction amount, in cents (such as ``4207`` for 42,07â
 -------------- ------- -
 merchant_id *  String  The personnal id that was given by Mandapay at the subscription step.
 -------------- ------- -
-ipnUrl         String  URL pointing to the ``ipn.php`` page, to which Mandapay will send payment and refund notifications. This URL must be accessible from anywhere on the Internet (usually not the case in ``localhost`` environments).
+ipnUrl *       String  URL pointing to the ``ipn.php`` page, to which Mandapay will send payment and refund notifications. This URL must be accessible from anywhere on the Internet (usually not the case in ``localhost`` environments).
 -------------- ------- -
 cancelUrl      String  URL pointing to your payment cancelation page, to which Mandapay will redirect your customer if he cancels the payment.
 -------------- ------- -
